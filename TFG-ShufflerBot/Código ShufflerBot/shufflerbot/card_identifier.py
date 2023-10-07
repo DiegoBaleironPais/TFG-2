@@ -170,7 +170,7 @@ class CardIdentifier:
     def prueba(self, image):
         #Conversion de la imagen a escala de grises
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        #Aplicacion del mÃtodo de OTSU para la binarizaciÃn
+        #Aplicacion del mï¿½todo de OTSU para la binarizaciï¿½n
         ret, otsu = cv2.threshold(gray, 35, 255, cv2.THRESH_BINARY)
         #Guardado de los resultados
         cv2.imwrite("Imagen a Grises.jpg", gray)
@@ -196,7 +196,7 @@ class CardIdentifier:
 
         #Medicion del porcentaje de negro en el segmento superior para identificar la carta
         porcentaje = self.buscar_pixeles_negros(otsu, altura_esquina, image_width)
-        #print("Porcentaje de pixeles negros: ", porcentaje, "%")
+        print("Porcentaje de pixeles negros: ", porcentaje, "%")
         if porcentaje > 55:
             palo = "Oros"
         #Conteo de segmentos para identificar la carta
@@ -210,7 +210,7 @@ class CardIdentifier:
                 palo = "Bastos"
             
         
-        #Aislamiento del nÃmero de la carta
+        #Aislamiento del nï¿½mero de la carta
         numero_y_end = min(otsu.shape[0], altura_esquina + 55)
         numero_x_end = min(otsu.shape[1], ancho_esquina + 50)
         
