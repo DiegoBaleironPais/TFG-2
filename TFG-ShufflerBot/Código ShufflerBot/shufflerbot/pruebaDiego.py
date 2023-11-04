@@ -12,8 +12,12 @@ from gui.robot_app import RobotApp
 
 # - Main program - #
 
-#Referencia a la placa arduino del dispensador
-dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
+try:
+    # Referencia a la placa arduino del dispensador
+    dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
+except serial.SerialException as e:
+    print(f"No se pudo abrir el puerto serial: {e}")
+    sys.exit(1)
 
 # Initialize the controller
 controller = telemetrix.Telemetrix()
@@ -48,7 +52,7 @@ numCarta = 0
 for carta in cartas:
     print(carta)
     input("Inserta la carta {numCarta}: ")
-    dispenser_serial.write(bytes(b'p'))
+    dispenser_serial.write(b'p')
     #storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
 
