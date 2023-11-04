@@ -48,7 +48,7 @@ numCarta = 0
 for carta in cartas:
     print(carta)
     input("Inserta la carta {numCarta}: ")
-    dispenser_serial.write("p".encode())
+    dispenser_serialwrite(bytes(b'p'))
     storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
 
