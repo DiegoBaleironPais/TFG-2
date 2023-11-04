@@ -16,7 +16,7 @@ try:
     # Referencia a la placa arduino del dispensador
     dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
 except serial.SerialException as e:
-    print(f"No se pudo abrir el puerto serial: {e}")
+    print(f"No se pudo abrir el puerto seriall: {e}")
     sys.exit(1)
 
 # Initialize the controller
