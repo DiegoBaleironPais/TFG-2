@@ -15,6 +15,7 @@ from gui.robot_app import RobotApp
 try:
     # Referencia a la placa arduino del dispensador
     dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
+    print("Dispensador conectado con exito")
 except serial.SerialException as e:
     print(f"No se pudo abrir el puerto seriall: {e}")
     sys.exit(1)
