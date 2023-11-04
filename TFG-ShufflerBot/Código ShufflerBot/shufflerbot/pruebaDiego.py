@@ -29,30 +29,30 @@ card_identifier.start_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Create the storiage
-#storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
+storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
 
 # Let everything warm up
-# time.sleep(1)
+time.sleep(1)
 
 # Centrado del tabor
-#storage.reset_position()
+storage.reset_position()
 
 # Insertado manual de las cartas
 #cartas = DECK
 
-#numCarta = 0
-#for carta in cartas:
-#    print(carta)
-#    input("Inserta la carta {numCarta}: ")
-#    storage.insert_next_card(carta, numCarta, numCarta)
-#    numCarta += 1
+numCarta = 0
+for carta in cartas:
+    print(carta)
+    input("Inserta la carta {numCarta}: ")
+    storage.insert_next_card(carta, numCarta, numCarta)
+    numCarta += 1
 
-user_input = "" 
-while user_input != "n":
+#user_input = "" 
+#while user_input != "n":
     #Identificar la próxima tarjeta
-    imagen = card_identifier.identify_card(PI_CAM_ID)
-    print("La carta es: ",imagen)
-    user_input = "n"
+#    imagen = card_identifier.identify_card(PI_CAM_ID)
+#    print("La carta es: ",imagen)
+#    user_input = "n"
 
 # for card in DECK:
 #    storage.deal_card(card)
@@ -62,7 +62,7 @@ card_identifier.stop_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Disable the controller
-#controller.shutdown()
+controller.shutdown()
 
 # Close the program
 sys.exit(0)
