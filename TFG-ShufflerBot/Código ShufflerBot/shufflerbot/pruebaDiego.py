@@ -1,5 +1,6 @@
 import sys
 import time
+import serial
 from telemetrix import telemetrix
 
 from definitions import *
@@ -10,6 +11,9 @@ from gui.robot_app import RobotApp
 
 
 # - Main program - #
+
+#Referencia a la placa arduino del dispensador
+dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
 
 # Initialize the controller
 controller = telemetrix.Telemetrix()
@@ -44,6 +48,7 @@ numCarta = 0
 for carta in cartas:
     print(carta)
     input("Inserta la carta {numCarta}: ")
+    dispenser_serial.write(b'p')
     storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
 
