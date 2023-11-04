@@ -12,9 +12,9 @@ from gui.robot_app import RobotApp
 # - Main program - #
 
 # Initialize the controller
-#controller = telemetrix.Telemetrix()
-#controller.set_pin_mode_digital_output(ENABLE_PIN)
-#controller.digital_write(ENABLE_PIN, 0)
+controller = telemetrix.Telemetrix()
+controller.set_pin_mode_digital_output(ENABLE_PIN)
+controller.digital_write(ENABLE_PIN, 0)
 
 # Create the motors
 #storage_motor = Motor(controller, STORAGE_PULSE_PIN, STORAGE_DIRECTION_PIN, STORAGE_NUM_STEPS, STORAGE_MAX_SPEED, STORAGE_ACCELERATION)
