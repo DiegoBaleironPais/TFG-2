@@ -38,7 +38,7 @@ time.sleep(1)
 storage.reset_position()
 
 # Insertado manual de las cartas
-#cartas = DECK
+cartas = DECK
 
 numCarta = 0
 for carta in cartas:
