@@ -68,6 +68,6 @@ card_identifier.stop_cam(PI_CAM_ID)
 
 # Disable the controller
 controller.shutdown()
-
+dispenser_serial.close()
 # Close the program
 sys.exit(0)
