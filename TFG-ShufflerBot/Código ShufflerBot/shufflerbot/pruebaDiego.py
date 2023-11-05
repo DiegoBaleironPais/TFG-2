@@ -39,13 +39,13 @@ card_identifier.start_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Create the storiage
-#storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
+storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
 
 # Let everything warm up
-#time.sleep(1)
+time.sleep(1)
 
 # Centrado del tabor
-#storage.reset_position()
+storage.reset_position()
 
 # Insertado manual de las cartas
 cartas = DECK
@@ -55,7 +55,7 @@ for carta in cartas:
     print(carta)
     input("Inserta la carta {numCarta}: ")
     dispenser_serial.write(b'p')
-    #storage.insert_next_card(carta, numCarta, numCarta)
+    storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
 
 #user_input = "" 
