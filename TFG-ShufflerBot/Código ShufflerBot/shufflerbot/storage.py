@@ -17,7 +17,7 @@ def photosensor_shuffler_callback(data):
         photosensor_shuffler = True
 
         # Show some information about the detection
-        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+        #date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         print(f"{date}: Photosensor detected something.")
 
 # Callback function to receive a notification when the photosensor detects the end of the card
@@ -31,14 +31,13 @@ def photosensor_dispenser_callback(data):
         # Actualizar el estado global del fotosensor a "no bloqueado"
         photosensor_dispenser = False
 
-        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+        #date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         # Imprimir mensaje cuando la carta ha terminado de pasar
         print(f"{date}: The card has finished passing through the sensor.")
 
     # Actualizar el estado global del fotosensor a "bloqueado" si es necesario
     if not photosensor_dispenser and card_present:
         photosensor_dispenser = True
-
 
 
 class Storage:
