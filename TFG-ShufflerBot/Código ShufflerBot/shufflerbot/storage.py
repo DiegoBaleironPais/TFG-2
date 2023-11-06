@@ -38,19 +38,19 @@ def testeo_infrarrojos(self):
         Método para probar los sensores de infrarrojos. Espera hasta que uno de los sensores detecte algo,
         luego imprime un mensaje y vuelve a poner la variable en False.
         '''
+        global photosensor_shuffler
+        global photosensor_dispenser
         print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
         try:
             while True:
                 # Comprueba si el fotosensor del shuffler ha detectado algo
                 if photosensor_shuffler:
                     print("El fotosensor del shuffler ha detectado algo.")
-                    global photosensor_shuffler
                     photosensor_shuffler = False  # Restablecer la variable para la próxima detección
 
                 # Comprueba si el fotosensor del dispensador ha detectado algo
                 if photosensor_dispenser:
                     print("El fotosensor del dispensador ha detectado algo.")
-                    global photosensor_dispenser
                     photosensor_dispenser = False  # Restablecer la variable para la próxima detección
 
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
