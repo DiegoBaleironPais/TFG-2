@@ -31,7 +31,7 @@ def photosensor_dispenser_callback(data):
         # Actualizar el estado global del fotosensor a "no bloqueado"
         photosensor_dispenser = False
 
-        #date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         # Imprimir mensaje cuando la carta ha terminado de pasar
         print(f"{date}: The card has finished passing through the sensor.")
 
@@ -113,9 +113,9 @@ class Storage:
                     photosensor_shuffler = False  # Restablecer la variable para la próxima detección
 
                 # Comprueba si el fotosensor del dispensador ha detectado algo
-                if photosensor_dispenser:
-                    print("El fotosensor del dispensador ha detectado algo.")
-                    photosensor_dispenser = False  # Restablecer la variable para la próxima detección
+                #if photosensor_dispenser:
+                    # print("El fotosensor del dispensador ha detectado algo.")
+                    # Restablecer la variable para la próxima detección
 
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
         except KeyboardInterrupt:
