@@ -33,30 +33,6 @@ def photosensor_dispenser_callback(data):
         date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         print(f"{date}: Photosensor detected something.")
 
-def testeo_infrarrojos(self):
-        '''
-        Método para probar los sensores de infrarrojos. Espera hasta que uno de los sensores detecte algo,
-        luego imprime un mensaje y vuelve a poner la variable en False.
-        '''
-        global photosensor_shuffler
-        global photosensor_dispenser
-        print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
-        try:
-            while True:
-                # Comprueba si el fotosensor del shuffler ha detectado algo
-                if photosensor_shuffler:
-                    print("El fotosensor del shuffler ha detectado algo.")
-                    photosensor_shuffler = False  # Restablecer la variable para la próxima detección
-
-                # Comprueba si el fotosensor del dispensador ha detectado algo
-                if photosensor_dispenser:
-                    print("El fotosensor del dispensador ha detectado algo.")
-                    photosensor_dispenser = False  # Restablecer la variable para la próxima detección
-
-                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
-        except KeyboardInterrupt:
-            print("Testeo de infrarrojos finalizado.")
-
 
 class Storage:
     '''
@@ -113,6 +89,30 @@ class Storage:
         Card identification system.
     '''
 
+    def testeo_infrarrojos(self):
+        '''
+        Método para probar los sensores de infrarrojos. Espera hasta que uno de los sensores detecte algo,
+        luego imprime un mensaje y vuelve a poner la variable en False.
+        '''
+        global photosensor_shuffler
+        global photosensor_dispenser
+        print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
+        try:
+            while True:
+                # Comprueba si el fotosensor del shuffler ha detectado algo
+                if photosensor_shuffler:
+                    print("El fotosensor del shuffler ha detectado algo.")
+                    photosensor_shuffler = False  # Restablecer la variable para la próxima detección
+
+                # Comprueba si el fotosensor del dispensador ha detectado algo
+                if photosensor_dispenser:
+                    print("El fotosensor del dispensador ha detectado algo.")
+                    photosensor_dispenser = False  # Restablecer la variable para la próxima detección
+
+                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
+        except KeyboardInterrupt:
+            print("Testeo de infrarrojos finalizado.")
+            
     def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
         self.controller = controller
         self.main_motor = main_motor
