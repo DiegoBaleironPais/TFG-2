@@ -46,7 +46,7 @@ storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, P
 #time.sleep(1)
 
 # Centrado del tabor
-storage.reset_position()
+#storage.reset_position()
 
 # Insertado manual de las cartas
 #cartas = DECK
@@ -69,13 +69,13 @@ for carta in cartas:
 
 # for card in DECK:
 #    storage.deal_card(card)
-
+storage.testeo_infrarrojos()
 # Stop the cameras
 card_identifier.stop_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Disable the controller
 controller.shutdown()
-dispenser_serial.close()
+#dispenser_serial.close()
 # Close the program
 sys.exit(0)

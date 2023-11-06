@@ -20,6 +20,44 @@ def photosensor_shuffler_callback(data):
         date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         print(f"{date}: Photosensor detected something.")
 
+# Callback function to receive a notification when the photosensor detects something
+def photosensor_dispenser_callback(data):
+    
+    if data[2] == 0:
+        
+        # Indicate that the photosensor has detected something
+        global photosensor_dispenser
+        photosensor_dispenser = True
+
+        # Show some information about the detection
+        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+        print(f"{date}: Photosensor detected something.")
+
+def testeo_infrarrojos(self):
+        '''
+        Método para probar los sensores de infrarrojos. Espera hasta que uno de los sensores detecte algo,
+        luego imprime un mensaje y vuelve a poner la variable en False.
+        '''
+        print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
+        try:
+            while True:
+                # Comprueba si el fotosensor del shuffler ha detectado algo
+                if photosensor_shuffler:
+                    print("El fotosensor del shuffler ha detectado algo.")
+                    global photosensor_shuffler
+                    photosensor_shuffler = False  # Restablecer la variable para la próxima detección
+
+                # Comprueba si el fotosensor del dispensador ha detectado algo
+                if photosensor_dispenser:
+                    print("El fotosensor del dispensador ha detectado algo.")
+                    global photosensor_dispenser
+                    photosensor_dispenser = False  # Restablecer la variable para la próxima detección
+
+                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
+        except KeyboardInterrupt:
+            print("Testeo de infrarrojos finalizado.")
+
+
 class Storage:
     '''
     Object that acts as a card storage, deals cards and plays them.
@@ -93,7 +131,7 @@ class Storage:
         controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
         controller.disable_digital_reporting(photoShuf_pin)
 
-        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_shuffler_callback)
+        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
         controller.disable_digital_reporting(photoDispen_pin)
 
     def reset_position(self):
