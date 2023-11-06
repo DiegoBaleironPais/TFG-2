@@ -96,6 +96,8 @@ class Storage:
         '''
         global photosensor_shuffler
         global photosensor_dispenser
+        self.controller.enable_digital_reporting(self.photoShuf_pin)
+        self.controller.enable_digital_reporting(self.photoDispen_pin)
         print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
         try:
             while True:
@@ -111,8 +113,10 @@ class Storage:
 
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
         except KeyboardInterrupt:
+            self.controller.disable_digital_reporting(self.photoShuf_pin)
+            self.controller.disable_digital_reporting(self.photoDispen_pin)
             print("Testeo de infrarrojos finalizado.")
-            
+
     def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
         self.controller = controller
         self.main_motor = main_motor
