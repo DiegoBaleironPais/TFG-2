@@ -177,7 +177,7 @@ class Storage:
         self.controller.enable_digital_reporting(self.photoShuf_pin)
         print("Hola2")
         # Turn motor while not in the correct position
-        while photosensor_shuffler == False:
+        while True:
             print("Hola3")
             self.main_motor.turn(2)
             
