@@ -40,7 +40,7 @@ card_identifier.start_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Create the storiage
-storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, PHOTOSENSOR2_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
+storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
 
 # Let everything warm up
 time.sleep(1)
