@@ -46,12 +46,12 @@ storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, P
 time.sleep(1)
 
 # Centrado del tabor
-#storage.reset_position()
+storage.reset_position()
 
 # Insertado manual de las cartas
 cartas = DECK
 
-
+"""
 numCarta = 0
 for carta in cartas:
     input("Inserta la carta {numCarta}: ")
@@ -59,6 +59,7 @@ for carta in cartas:
     storage.insertion_wait()
     storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
+"""
 
 #user_input = "" 
 #while user_input != "n":
