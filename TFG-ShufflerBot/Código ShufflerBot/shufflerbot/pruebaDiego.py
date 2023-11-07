@@ -44,7 +44,7 @@ storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, P
 
 # Let everything warm up
 time.sleep(1)
-
+print("hola")
 # Centrado del tabor
 storage.reset_position()
 
