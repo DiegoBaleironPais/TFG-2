@@ -17,7 +17,7 @@ def photosensor_shuffler_callback(data):
         photosensor_shuffler = True
 
         # Show some information about the detection
-        #date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         print(f"{date}: Photosensor detected something.")
 
 # Callback function to receive a notification when the photosensor detects the end of the card
