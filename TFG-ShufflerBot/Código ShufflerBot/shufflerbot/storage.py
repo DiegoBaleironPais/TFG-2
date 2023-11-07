@@ -175,7 +175,7 @@ class Storage:
 
         # Enable the photosensor
         self.controller.enable_digital_reporting(self.photoShuf_pin)
-
+        print("Hola2")
         # Turn motor while not in the correct position
         while not photosensor_shuffler:
             self.main_motor.turn(2)
