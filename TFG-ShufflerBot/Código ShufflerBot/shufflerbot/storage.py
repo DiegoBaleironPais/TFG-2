@@ -138,7 +138,14 @@ class Storage:
         try:
             while not inserted_card:
                 if time.time() - start_time > 6:  # Comprobar si han pasado 3 segundos
-                    print("Tiempo de espera excedido. Carta no detectada.")
+                    print("Tiempo de espera excedido")
+                    if (photosensor_dispenser == true) {
+                        print("\tCarta atorada en la salida")
+                        return 1
+                    } else {
+                        print("\tCarta atorada en la entrada")
+                        return 2;
+                    }
                     return 1  # Devuelve 1 si la carta no se detecta en 3 segundos
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
             print("Carta insertada")
