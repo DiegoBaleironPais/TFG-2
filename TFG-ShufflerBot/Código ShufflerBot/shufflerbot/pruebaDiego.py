@@ -55,11 +55,11 @@ storage.insert_next_card("1o", 1, 1)
 
 numCarta = 0
 for carta in cartas:
-    input("Inserta la carta {numCarta}: ")
+    #input("Inserta la carta {numCarta}: ")
     dispenser_serial.write(b'p')
-    storage.insertion_wait()
-    storage.insert_next_card(carta, numCarta, numCarta)
-    numCarta += 1
+    #storage.insertion_wait()
+    #storage.insert_next_card(carta, numCarta, numCarta)
+    #numCarta += 1
 
 
 #user_input = "" 
