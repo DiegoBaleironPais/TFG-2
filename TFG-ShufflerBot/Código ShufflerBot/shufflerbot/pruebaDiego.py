@@ -51,7 +51,7 @@ storage.reset_position()
 # Insertado manual de las cartas
 cartas = DECK
 
-storage.insert_next_card(None, None, None)
+storage.insert_next_card("1o", 1, 1)
 
 numCarta = 0
 for carta in cartas:
