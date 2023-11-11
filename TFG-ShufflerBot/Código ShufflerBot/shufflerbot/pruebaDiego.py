@@ -57,6 +57,9 @@ storage.insert_next_card("1o", 1, 1)
 numCarta = 0
 for carta in cartas:
     input("Inserta la carta {numCarta}: ")
+    dispenser_serial.write(b'p')
+    storage.insert_next_card(carta, numCarta, numCarta)
+    """
     resultadoInsercion = -1
     contadorFallos = 0
     while (contadorFallos < 3 and resultadoInsercion != 0):
@@ -69,6 +72,7 @@ for carta in cartas:
             exit()
     storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
+    """
 
 
 #user_input = "" 
