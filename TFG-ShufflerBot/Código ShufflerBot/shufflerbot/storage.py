@@ -165,26 +165,29 @@ class Storage:
         controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
         controller.disable_digital_reporting(photoDispen_pin)
 
-    def reset_position(self):
-        '''
-        Turns the storage to its origin, position 0.
-        '''
-        # Variable that checks if the storage is in the origin
-        global photosensor_shuffler
-        photosensor_shuffler = False
+    def insertion_wait(self):
+        global photosensor_dispenser
+        global inserted_card
+        inserted_card = False
+        self.controller.enable_digital_reporting(self.photoDispen_pin)
+        print("Iniciando espera de insercción.")
 
-        # Enable the photosensor
-        self.controller.enable_digital_reporting(self.photoShuf_pin)
+        start_time = time.time()  # Guarda el tiempo actual
+        try:
+            while not inserted_card:
+                if time.time() - start_time > 1.5:  # Comprobar si han pasado 3 segundos
+                    print("Tiempo de espera excedido. Carta no detectada.")
+                    return 1  # Devuelve 1 si la carta no se detecta en 3 segundos
+                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
+            print("Carta insertada")
+            return 0  # Devuelve 0 si la carta es detectada
+        except KeyboardInterrupt:
+            self.controller.disable_digital_reporting(self.photoDispen_pin)
+            print("Espera de insercción interrumpida")
+            exit()
+        finally:
+            self.controller.disable_digital_reporting(self.photoDispen_pin)
 
-        # Turn motor while not in the correct position
-        while not photosensor_shuffler:
-            self.main_motor.turn(2)
-            
-        # Once in the correct position, set the storage's position to 0
-        self.main_motor.set_current_position(2)
-
-        # Disable the photosensor
-        self.controller.disable_digital_reporting(self.photoShuf_pin)
 
     def insert_next_card(self, card, card_number, position):
         '''
