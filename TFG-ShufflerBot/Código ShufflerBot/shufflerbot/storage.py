@@ -126,45 +126,7 @@ class Storage:
             self.controller.disable_digital_reporting(self.photoDispen_pin)
             print("Testeo de infrarrojos finalizado.")
 
-    def insertion_wait(self):
-     
-        global photosensor_dispenser
-        global inserted_card
-        inserted_card = False
-        self.controller.enable_digital_reporting(self.photoDispen_pin)
-        print("Iniciando espera de insercción.")
-        try:
-            while not inserted_card:
-                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
-            print("Carta insertada")
-        except KeyboardInterrupt:
-            self.controller.disable_digital_reporting(self.photoDispen_pin)
-            print("Espera de insercción interrumpida")
-            exit()
-        finally:
-            self.controller.disable_digital_reporting(self.photoDispen_pin)
-
-    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
-        self.controller = controller
-        self.main_motor = main_motor
-        self.inserter_motor = inserter_motor
-        self.photoShuf_pin = photoShuf_pin
-        self.photoDispen_pin = photoDispen_pin
-        self.deck = deck
-        self.shuffle_type = shuffle_type
-        self.extractor_step = extractor_step
-        self.num_cards = len(deck)
-        self.steps_per_slot = main_motor.num_steps / self.num_cards
-        self.cards = [None] * self.num_cards
-        self.slots = [None] * self.num_cards
-        self.card_identifier = card_identifier
-
-        controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
-        controller.disable_digital_reporting(photoShuf_pin)
-
-        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
-        controller.disable_digital_reporting(photoDispen_pin)
-
+    
     def insertion_wait(self):
         global photosensor_dispenser
         global inserted_card
@@ -188,6 +150,48 @@ class Storage:
         finally:
             self.controller.disable_digital_reporting(self.photoDispen_pin)
 
+
+    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
+        self.controller = controller
+        self.main_motor = main_motor
+        self.inserter_motor = inserter_motor
+        self.photoShuf_pin = photoShuf_pin
+        self.photoDispen_pin = photoDispen_pin
+        self.deck = deck
+        self.shuffle_type = shuffle_type
+        self.extractor_step = extractor_step
+        self.num_cards = len(deck)
+        self.steps_per_slot = main_motor.num_steps / self.num_cards
+        self.cards = [None] * self.num_cards
+        self.slots = [None] * self.num_cards
+        self.card_identifier = card_identifier
+
+        controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
+        controller.disable_digital_reporting(photoShuf_pin)
+
+        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
+        controller.disable_digital_reporting(photoDispen_pin)
+
+    def reset_position(self):
+        '''
+        Turns the storage to its origin, position 0.
+        '''
+        # Variable that checks if the storage is in the origin
+        global photosensor_shuffler
+        photosensor_shuffler = False
+
+        # Enable the photosensor
+        self.controller.enable_digital_reporting(self.photoShuf_pin)
+
+        # Turn motor while not in the correct position
+        while not photosensor_shuffler:
+            self.main_motor.turn(2)
+            
+        # Once in the correct position, set the storage's position to 0
+        self.main_motor.set_current_position(2)
+
+        # Disable the photosensor
+        self.controller.disable_digital_reporting(self.photoShuf_pin)
 
     def insert_next_card(self, card, card_number, position):
         '''
