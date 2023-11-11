@@ -174,18 +174,17 @@ class Storage:
         photosensor_shuffler = False
 
         # Enable the photosensor
-        self.controller.enable_digital_reporting(self.photoShuf_pin)
-        print("Hola2")
+        self.controller.enable_digital_reporting(self.photosensor_pin)
+
         # Turn motor while not in the correct position
-        while True:
-            print("Hola3")
+        while not photosensor_shuffler:
             self.main_motor.turn(2)
             
         # Once in the correct position, set the storage's position to 0
         self.main_motor.set_current_position(2)
 
         # Disable the photosensor
-        self.controller.disable_digital_reporting(self.photoShuf_pin)
+        self.controller.disable_digital_reporting(self.photosensor_pin)
 
     def insert_next_card(self, card, card_number, position):
         '''
