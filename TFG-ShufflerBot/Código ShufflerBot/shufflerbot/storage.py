@@ -4,20 +4,44 @@ from random import randint
 from definitions import ORDERED_SHUFFLE
 
 # Variable that contains if the photosensor has detected something
-photosensor_detected = False
+photosensor_shuffler = False
+photosensor_dispenser = False
+inserted_card = False
 
 # Callback function to receive a notification when the photosensor detects something
-def photosensor_callback(data):
+def photosensor_shuffler_callback(data):
     
     if data[2] == 0:
         
         # Indicate that the photosensor has detected something
-        global photosensor_detected
-        photosensor_detected = True
+        global photosensor_shuffler
+        photosensor_shuffler = True
 
         # Show some information about the detection
         date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         print(f"{date}: Photosensor detected something.")
+
+# Callback function to receive a notification when the photosensor detects the end of the card
+def photosensor_dispenser_callback(data):
+    # Indicate that the photosensor has detected the end of the card
+    global photosensor_dispenser
+    global inserted_card
+    card_present = data[2] == 0  # Será True si la carta está bloqueando el sensor
+
+    # Solo actuamos cuando la carta deja de bloquear el sensor
+    if photosensor_dispenser and not card_present:
+        # Actualizar el estado global del fotosensor a "no bloqueado"
+        photosensor_dispenser = False
+
+        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
+        # Imprimir mensaje cuando la carta ha terminado de pasar
+        print(f"{date}: The card has finished passing through the sensor.")
+        inserted_card = True
+
+    # Actualizar el estado global del fotosensor a "bloqueado" si es necesario
+    if not photosensor_dispenser and card_present:
+        photosensor_dispenser = True
+
 
 class Storage:
     '''
@@ -31,8 +55,10 @@ class Storage:
         Motor attached to the storage.
     inserter_motor : motor.Motor
         Motor attached to the inserter.
-    photosensor_pin : int
+    photoShuf_pin : int
         Number of the pin that the storage photosensor is connected to.
+    photoDispen_pin : int
+        Number of the pin that the dispenser photosensor is connected to.
     deck : list
         The cards that the deck has.
     shuffle_type : int
@@ -50,8 +76,10 @@ class Storage:
         Motor attached to the storage.
     inserter_motor : motor.Motor
         Motor attached to the inserter.
-    photosensor_pin : int
+    photoShuf_pin : int
         Number of the pin that the storage photosensor is connected to.
+    photoDispen_pin : int
+        Number of the pin that the dispenser photosensor is connected to.
     deck : list
         The cards that the deck has.
     shuffle_type : int
@@ -70,11 +98,58 @@ class Storage:
         Card identification system.
     '''
 
-    def __init__(self, controller, main_motor, inserter_motor, photosensor_pin, deck, shuffle_type, extractor_step, card_identifier):
+    def testeo_infrarrojos(self):
+        '''
+        Método para probar los sensores de infrarrojos. Espera hasta que uno de los sensores detecte algo,
+        luego imprime un mensaje y vuelve a poner la variable en False.
+        '''
+        global photosensor_shuffler
+        global photosensor_dispenser
+        self.controller.enable_digital_reporting(self.photoShuf_pin)
+        self.controller.enable_digital_reporting(self.photoDispen_pin)
+        print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
+        try:
+            while True:
+                # Comprueba si el fotosensor del shuffler ha detectado algo
+                if photosensor_shuffler:
+                    print("El fotosensor del shuffler ha detectado algo.")
+                    photosensor_shuffler = False  # Restablecer la variable para la próxima detección
+
+                # Comprueba si el fotosensor del dispensador ha detectado algo
+                #if photosensor_dispenser:
+                    # print("El fotosensor del dispensador ha detectado algo.")
+                    # Restablecer la variable para la próxima detección
+
+                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
+        except KeyboardInterrupt:
+            self.controller.disable_digital_reporting(self.photoShuf_pin)
+            self.controller.disable_digital_reporting(self.photoDispen_pin)
+            print("Testeo de infrarrojos finalizado.")
+
+    def insertion_wait(self):
+     
+        global photosensor_dispenser
+        global inserted_card
+        inserted_card = False
+        self.controller.enable_digital_reporting(self.photoDispen_pin)
+        print("Iniciando espera de insercción.")
+        try:
+            while not inserted_card:
+                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
+            print("Carta insertada")
+        except KeyboardInterrupt:
+            self.controller.disable_digital_reporting(self.photoDispen_pin)
+            print("Espera de insercción interrumpida")
+            exit()
+        finally:
+            self.controller.disable_digital_reporting(self.photoDispen_pin)
+
+    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
         self.controller = controller
         self.main_motor = main_motor
         self.inserter_motor = inserter_motor
-        self.photosensor_pin = photosensor_pin
+        self.photoShuf_pin = photoShuf_pin
+        self.photoDispen_pin = photoDispen_pin
         self.deck = deck
         self.shuffle_type = shuffle_type
         self.extractor_step = extractor_step
@@ -84,29 +159,33 @@ class Storage:
         self.slots = [None] * self.num_cards
         self.card_identifier = card_identifier
 
-        controller.set_pin_mode_digital_input(photosensor_pin, photosensor_callback)
-        controller.disable_digital_reporting(photosensor_pin)
+        controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
+        controller.disable_digital_reporting(photoShuf_pin)
+
+        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
+        controller.disable_digital_reporting(photoDispen_pin)
 
     def reset_position(self):
         '''
         Turns the storage to its origin, position 0.
         '''
         # Variable that checks if the storage is in the origin
-        global photosensor_detected
-        photosensor_detected = False
+        global photosensor_shuffler
+        photosensor_shuffler = False
 
         # Enable the photosensor
-        self.controller.enable_digital_reporting(self.photosensor_pin)
-
+        self.controller.enable_digital_reporting(self.photoShuf_pin)
+        print("Hola2")
         # Turn motor while not in the correct position
-        while not photosensor_detected:
+        while True:
+            print("Hola3")
             self.main_motor.turn(2)
             
         # Once in the correct position, set the storage's position to 0
         self.main_motor.set_current_position(2)
 
         # Disable the photosensor
-        self.controller.disable_digital_reporting(self.photosensor_pin)
+        self.controller.disable_digital_reporting(self.photoShuf_pin)
 
     def insert_next_card(self, card, card_number, position):
         '''
