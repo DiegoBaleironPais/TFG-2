@@ -137,7 +137,7 @@ class Storage:
         start_time = time.time()  # Guarda el tiempo actual
         try:
             while not inserted_card:
-                if time.time() - start_time > 3:  # Comprobar si han pasado 3 segundos
+                if time.time() - start_time > 6:  # Comprobar si han pasado 3 segundos
                     print("Tiempo de espera excedido. Carta no detectada.")
                     return 1  # Devuelve 1 si la carta no se detecta en 3 segundos
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
