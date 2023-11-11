@@ -56,8 +56,16 @@ storage.insert_next_card("1o", 1, 1)
 numCarta = 0
 for carta in cartas:
     input("Inserta la carta {numCarta}: ")
-    dispenser_serial.write(b'p')
-    storage.insertion_wait()
+    resultadoInsercion = -1
+    contadorFallos = 0
+    while (contadorFallos < 3 and resultadoInsercion != 0):
+        dispenser_serial.write(b'p')
+        resultadoInsercion = storage.insertion_wait()
+        if resultadoInsercion == 1:
+            dispenser_serial.write(b'k')
+            controller.shutdown()
+            dispenser_serial.close()
+            exit()
     storage.insert_next_card(carta, numCarta, numCarta)
     numCarta += 1
 

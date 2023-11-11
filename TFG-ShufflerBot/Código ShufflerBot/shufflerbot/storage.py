@@ -141,12 +141,13 @@ class Storage:
                     print("Tiempo de espera excedido")
                     if (photosensor_dispenser == true) {
                         print("\tCarta atorada en la salida")
+                        self.controller.disable_digital_reporting(self.photoDispen_pin)
                         return 1
                     } else {
                         print("\tCarta atorada en la entrada")
+                        self.controller.disable_digital_reporting(self.photoDispen_pin)
                         return 2;
                     }
-                    return 1  # Devuelve 1 si la carta no se detecta en 3 segundos
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
             print("Carta insertada")
             return 0  # Devuelve 0 si la carta es detectada
