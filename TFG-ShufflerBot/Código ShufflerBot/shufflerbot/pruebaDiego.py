@@ -11,7 +11,15 @@ from gui.robot_app import RobotApp
 
 
 # - Main program - #
+try:
+    # Referencia a la placa arduino del dispensador
+    dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
+    print("Dispensador conectado con exito")
+except serial.SerialException as e:
+    print(f"No se pudo abrir el puerto seriall: {e}")
+    sys.exit(1)
 
+"""
 # Initialize the controller
 controller = telemetrix.Telemetrix(port='/dev/ttyACM0')  # Reemplaza con el puerto correcto
 controller.set_pin_mode_digital_output(ENABLE_PIN)
@@ -85,3 +93,8 @@ card_identifier.stop_cam(PI_CAM_ID)
 controller.shutdown()
 # Close the program
 sys.exit(0)
+"""
+while True:
+    input("Inserta la carta {numCarta}: ")
+    dispenser_serial.write(b'p')
+    dispenser_serial.reset_input_buffer()   
