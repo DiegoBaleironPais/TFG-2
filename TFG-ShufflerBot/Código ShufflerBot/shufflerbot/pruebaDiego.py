@@ -13,7 +13,7 @@ from gui.robot_app import RobotApp
 # - Main program - #
 
 # Initialize the controller
-controller = telemetrix.Telemetrix()
+controller = telemetrix.Telemetrix(port='/dev/ttyACM0')  # Reemplaza con el puerto correcto
 controller.set_pin_mode_digital_output(ENABLE_PIN)
 controller.digital_write(ENABLE_PIN, 0)
 
