@@ -149,7 +149,7 @@ class Storage:
                         return 2
                     
                 time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
-            print("Carta insertada")
+            print("Carta insertada con exito")
             return 0  # Devuelve 0 si la carta es detectada
         except KeyboardInterrupt:
             self.controller.disable_digital_reporting(self.photoDispen_pin)
