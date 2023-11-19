@@ -35,7 +35,7 @@ card_identifier = CardIdentifier(PI_CAM_ID, USB_CAM_ID)
 
 
 # Start the cameras
-card_identifier.start_cam(PI_CAM_ID)
+#card_identifier.start_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Create the storiage
