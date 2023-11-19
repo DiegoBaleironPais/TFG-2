@@ -159,7 +159,7 @@ class Storage:
             self.controller.disable_digital_reporting(self.photoDispen_pin)
 
 
-    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step):
+    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
         self.controller = controller
         self.main_motor = main_motor
         self.inserter_motor = inserter_motor
@@ -172,6 +172,7 @@ class Storage:
         self.steps_per_slot = main_motor.num_steps / self.num_cards
         self.cards = [None] * self.num_cards
         self.slots = [None] * self.num_cards
+        self.card_identifier = card_identifier
 
         controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
         controller.disable_digital_reporting(photoShuf_pin)
@@ -186,13 +187,12 @@ class Storage:
         # Variable that checks if the storage is in the origin
         global photosensor_shuffler
         photosensor_shuffler = False
-        print("hasta aqui furrula")
+
         # Enable the photosensor
         self.controller.enable_digital_reporting(self.photoShuf_pin)
-        print("hasta aqui furrula 2")
+
         # Turn motor while not in the correct position
         while not photosensor_shuffler:
-            print("hasta aqui furrula 3")
             self.main_motor.turn(2)
             
         # Once in the correct position, set the storage's position to 0
