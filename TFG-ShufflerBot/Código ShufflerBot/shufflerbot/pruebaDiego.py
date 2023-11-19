@@ -57,7 +57,6 @@ try:
     for carta in cartas:
         leter = input("Inserta la carta {numCarta}: ")
         dispenser_serial.write(b'p')
-        resultado = resultadoInsercion = storage.insertion_wait()
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
         #dispenser_serial.reset_input_buffer()
