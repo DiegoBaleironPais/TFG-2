@@ -59,9 +59,8 @@ try:
         dispenser_serial.write(b'p')
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
-            numCarta -= 1
+            numCarta += 1
         #dispenser_serial.reset_input_buffer()
-        numCarta += 1
 finally:
     dispenser_serial.close()
 
