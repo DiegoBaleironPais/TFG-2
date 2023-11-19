@@ -189,9 +189,10 @@ class Storage:
         print("hasta aqui furrula")
         # Enable the photosensor
         self.controller.enable_digital_reporting(self.photoShuf_pin)
-
+        print("hasta aqui furrula 2")
         # Turn motor while not in the correct position
         while not photosensor_shuffler:
+            print("hasta aqui furrula 3")
             self.main_motor.turn(2)
             
         # Once in the correct position, set the storage's position to 0
