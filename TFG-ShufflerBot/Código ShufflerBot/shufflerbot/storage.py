@@ -172,7 +172,6 @@ class Storage:
         self.steps_per_slot = main_motor.num_steps / self.num_cards
         self.cards = [None] * self.num_cards
         self.slots = [None] * self.num_cards
-        #self.card_identifier = card_identifier
 
         controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
         controller.disable_digital_reporting(photoShuf_pin)
