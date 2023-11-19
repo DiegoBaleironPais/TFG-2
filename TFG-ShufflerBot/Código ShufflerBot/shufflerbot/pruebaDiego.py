@@ -44,9 +44,10 @@ print("hasta aqui si")
 # Let everything warm up
 time.sleep(1)
 
+print("hasta aqui si")
 # Centrado del tabor
 storage.reset_position()
-
+print("hasta aqui si")
 # Insertado manual de las cartas
 cartas = DECK
 
