@@ -40,7 +40,7 @@ inserter_motor = Motor(controller, INSERTER_PULSE_PIN, INSERTER_DIRECTION_PIN, I
 
 # Create the storiage
 storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, PHOTOSENSOR2_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP)
-
+print("hasta aqui si")
 # Let everything warm up
 time.sleep(1)
 
