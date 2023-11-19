@@ -186,7 +186,7 @@ class Storage:
         # Variable that checks if the storage is in the origin
         global photosensor_shuffler
         photosensor_shuffler = False
-        print("hasta aqui")
+        print("hasta aqui furrula")
         # Enable the photosensor
         self.controller.enable_digital_reporting(self.photoShuf_pin)
 
