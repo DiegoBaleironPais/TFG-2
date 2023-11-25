@@ -57,10 +57,6 @@ try:
     for carta in cartas:
         leter = input("Inserta la carta {numCarta}: ")
         dispenser_serial.write(b'p')
-        leter2 = input("Sacar foto?")
-        while leter2 != "n":
-            card_identifier.capture_image(PI_CAM_ID)
-            leter2 = input("Sacar foto?")
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
