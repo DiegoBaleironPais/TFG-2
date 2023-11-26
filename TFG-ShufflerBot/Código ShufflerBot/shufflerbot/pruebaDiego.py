@@ -17,7 +17,7 @@ controller = telemetrix.Telemetrix(com_port='/dev/ttyACM0')  # Reemplaza con el 
 controller.set_pin_mode_digital_output(ENABLE_PIN)
 controller.digital_write(ENABLE_PIN, 0)
 
-"""
+
 try:
     # Referencia a la placa arduino del dispensador
     dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
@@ -25,7 +25,7 @@ try:
 except serial.SerialException as e:
     print(f"No se pudo abrir el puerto seriall: {e}")
     sys.exit(1)
-"""
+
 # Create the motors
 storage_motor = Motor(controller, STORAGE_PULSE_PIN, STORAGE_DIRECTION_PIN, STORAGE_NUM_STEPS, STORAGE_MAX_SPEED, STORAGE_ACCELERATION)
 inserter_motor = Motor(controller, INSERTER_PULSE_PIN, INSERTER_DIRECTION_PIN, INSERTER_NUM_STEPS, INSERTER_MAX_SPEED, INSERTER_ACCELERATION)
@@ -56,14 +56,14 @@ numCarta = 1
 try:
     for carta in cartas:
         leter = input("Inserta la carta {numCarta}: ")
-        storage.move_servo()
+        dispenser_serial.write(b'p')
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
         #dispenser_serial.reset_input_buffer()
 
 finally:
-    print("fin")
+    dispenser_serial.close()
 
 
 
