@@ -179,6 +179,21 @@ class Storage:
 
         controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
         controller.disable_digital_reporting(photoDispen_pin)
+        self.servo_pin = photoDispen_pin
+    
+    def move_servo(self):
+        '''
+        Mueve el servo de 0 a 180 grados y de vuelta a 0 en un segundo.
+        '''
+        # Mueve el servo de 0 a 180 grados
+        for position in range(0, 181):
+            self.controller.servo_write(self.servo_pin, position)
+            time.sleep(1/180)  # Espera el tiempo necesario para el movimiento
+
+        # Mueve el servo de 180 a 0 grados
+        for position in range(180, -1, -1):
+            self.controller.servo_write(self.servo_pin, position)
+            time.sleep(1/180)  # Espera el tiempo necesario para el movimiento
 
     def reset_position(self):
         '''
