@@ -1,6 +1,6 @@
 import time
 from random import randint
-
+from telemetrix import telemetrix
 from definitions import ORDERED_SHUFFLE
 
 # Variable that contains if the photosensor has detected something
@@ -177,9 +177,9 @@ class Storage:
         controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
         controller.disable_digital_reporting(photoShuf_pin)
 
-        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
-        controller.disable_digital_reporting(photoDispen_pin)
         self.servo_pin = photoDispen_pin
+        controller.set_pin_mode_servo(self.servo_pin)
+
     
     def move_servo(self):
         '''
