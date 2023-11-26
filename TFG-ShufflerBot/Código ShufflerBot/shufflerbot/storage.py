@@ -178,6 +178,7 @@ class Storage:
         controller.disable_digital_reporting(photoShuf_pin)
 
         self.servo_pin = photoDispen_pin
+        print(photoDispen_pin)
         controller.set_pin_mode_servo(self.servo_pin)
 
     
