@@ -21,27 +21,6 @@ def photosensor_shuffler_callback(data):
         date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
         print(f"{date}: Photosensor detected something.")
 
-# Callback function to receive a notification when the photosensor detects the end of the card
-def photosensor_dispenser_callback(data):
-    # Indicate that the photosensor has detected the end of the card
-    global photosensor_dispenser
-    global inserted_card
-    card_present = data[2] == 0  # Será True si la carta está bloqueando el sensor
-
-    # Solo actuamos cuando la carta deja de bloquear el sensor
-    if photosensor_dispenser and not card_present:
-        # Actualizar el estado global del fotosensor a "no bloqueado"
-        photosensor_dispenser = False
-
-        date = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(data[3]))
-        # Imprimir mensaje cuando la carta ha terminado de pasar
-        print(f"{date}: The card has finished passing through the sensor.")
-        inserted_card = True
-
-    # Actualizar el estado global del fotosensor a "bloqueado" si es necesario
-    if not photosensor_dispenser and card_present:
-        photosensor_dispenser = True
-
 
 class Storage:
     '''
@@ -98,73 +77,11 @@ class Storage:
         Card identification system.
     '''
 
-    def testeo_infrarrojos(self):
-        '''
-        Método para probar los sensores de infrarrojos. Espera hasta que uno de los sensores detecte algo,
-        luego imprime un mensaje y vuelve a poner la variable en False.
-        '''
-        global photosensor_shuffler
-        global photosensor_dispenser
-        self.controller.enable_digital_reporting(self.photoShuf_pin)
-        self.controller.enable_digital_reporting(self.photoDispen_pin)
-        print("Iniciando testeo de infrarrojos. Presiona Ctrl+C para salir.")
-        try:
-            while True:
-                # Comprueba si el fotosensor del shuffler ha detectado algo
-                if photosensor_shuffler:
-                    print("El fotosensor del shuffler ha detectado algo.")
-                    photosensor_shuffler = False  # Restablecer la variable para la próxima detección
-
-                # Comprueba si el fotosensor del dispensador ha detectado algo
-                #if photosensor_dispenser:
-                    # print("El fotosensor del dispensador ha detectado algo.")
-                    # Restablecer la variable para la próxima detección
-
-                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
-        except KeyboardInterrupt:
-            self.controller.disable_digital_reporting(self.photoShuf_pin)
-            self.controller.disable_digital_reporting(self.photoDispen_pin)
-            print("Testeo de infrarrojos finalizado.")
-
-    
-    def insertion_wait(self):
-        global photosensor_dispenser
-        global inserted_card
-        inserted_card = False
-        self.controller.enable_digital_reporting(self.photoDispen_pin)
-        print("Iniciando espera de insercción.")
-
-        start_time = time.time()  # Guarda el tiempo actual
-        try:
-            while not inserted_card:
-                if time.time() - start_time > 6:  # Comprobar si han pasado 3 segundos
-                    print("Tiempo de espera excedido")
-                    if photosensor_dispenser == True:
-                        print("\tCarta atorada en la salida")
-                        self.controller.disable_digital_reporting(self.photoDispen_pin)
-                        return 1
-                    else: 
-                        print("\tCarta atorada en la entrada")
-                        self.controller.disable_digital_reporting(self.photoDispen_pin)
-                        return 2
-                    
-                time.sleep(0.1)  # Pequeña pausa para evitar uso excesivo de CPU
-            print("Carta insertada con exito")
-            return 0  # Devuelve 0 si la carta es detectada
-        except KeyboardInterrupt:
-            self.controller.disable_digital_reporting(self.photoDispen_pin)
-            print("Espera de insercción interrumpida")
-            exit()
-        finally:
-            self.controller.disable_digital_reporting(self.photoDispen_pin)
-
-
-    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, photoDispen_pin, deck, shuffle_type, extractor_step, card_identifier):
+    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, deck, shuffle_type, extractor_step, card_identifier):
         self.controller = controller
         self.main_motor = main_motor
         self.inserter_motor = inserter_motor
         self.photoShuf_pin = photoShuf_pin
-        self.photoDispen_pin = photoDispen_pin
         self.deck = deck
         self.shuffle_type = shuffle_type
         self.extractor_step = extractor_step
@@ -176,9 +93,6 @@ class Storage:
 
         controller.set_pin_mode_digital_input(photoShuf_pin, photosensor_shuffler_callback)
         controller.disable_digital_reporting(photoShuf_pin)
-
-        controller.set_pin_mode_digital_input(photoDispen_pin, photosensor_dispenser_callback)
-        controller.disable_digital_reporting(photoDispen_pin)
 
     def reset_position(self):
         '''
