@@ -56,11 +56,11 @@ numCarta = 1
 try:
     for carta in cartas:
         leter = input("Inserta la carta {numCarta}: ")
-        dispenser_serial.write(b'p')
+        #dispenser_serial.write(b'p')
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
-        time.sleep(2)
+        #time.sleep(2)
         #dispenser_serial.reset_input_buffer()
 
 finally:
