@@ -60,6 +60,7 @@ try:
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
+        time.sleep(2)
         #dispenser_serial.reset_input_buffer()
 
 finally:
