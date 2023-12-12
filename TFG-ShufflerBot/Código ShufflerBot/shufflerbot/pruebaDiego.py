@@ -60,9 +60,9 @@ try:
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
+        time.sleep(2)
         imagen = card_identifier.identify_card(PI_CAM_ID)
         print("La carta es: ",imagen)
-        time.sleep(2)
 finally:
     dispenser_serial.close()
 
