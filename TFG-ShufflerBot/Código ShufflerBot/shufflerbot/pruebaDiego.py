@@ -55,13 +55,13 @@ storage.insert_next_card("1o", 1, 1)
 numCarta = 1
 try:
     for carta in cartas:
-        imagen = card_identifier.identify_card(PI_CAM_ID)
-        print("La carta es: ",imagen)
         leter = input("Inserta la carta {numCarta}: ")
         dispenser_serial.write(b'p')
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
+        imagen = card_identifier.identify_card(PI_CAM_ID)
+        print("La carta es: ",imagen)
         time.sleep(2)
 finally:
     dispenser_serial.close()
