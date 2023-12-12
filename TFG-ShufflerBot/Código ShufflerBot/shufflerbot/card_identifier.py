@@ -171,7 +171,7 @@ class CardIdentifier:
         #Conversion de la imagen a escala de grises
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         #Aplicacion del m�todo de OTSU para la binarizaci�n
-        ret, otsu = cv2.threshold(gray, 75, 255, cv2.THRESH_BINARY)
+        ret, otsu = cv2.threshold(gray, 90, 255, cv2.THRESH_BINARY)
         #Guardado de los resultados
         cv2.imwrite("Imagen a Grises.jpg", gray)
         cv2.imwrite("Imagen a Otsu.jpg", otsu)
