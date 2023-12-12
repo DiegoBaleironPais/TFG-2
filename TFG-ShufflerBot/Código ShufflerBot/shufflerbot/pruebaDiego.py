@@ -41,9 +41,6 @@ card_identifier.start_cam(PI_CAM_ID)
 # Create the storiage
 storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
 
-# Let everything warm up
-time.sleep(1)
-
 # Centrado del tabor
 storage.reset_position()
 
@@ -60,7 +57,7 @@ try:
         if (leter != "p"):
             storage.insert_next_card(carta, numCarta, numCarta)
             numCarta += 1
-        time.sleep(2)
+        time.sleep(4)
         imagen = card_identifier.identify_card(PI_CAM_ID)
         print("La carta es: ",imagen)
 finally:
