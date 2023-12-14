@@ -95,7 +95,7 @@ class CardIdentifier:
         elif camera == self.USB_CAM_ID:
             _, image = self.usb_cam.read()
 
-        cv2.imwrite("Imagen Original.jpg",image)
+        cv2.imwrite("Original.jpg",image)
         
         # Return the captured image
         return image
