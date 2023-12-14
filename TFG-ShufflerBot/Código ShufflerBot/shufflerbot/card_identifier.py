@@ -173,8 +173,8 @@ class CardIdentifier:
         #Aplicacion del m�todo de OTSU para la binarizaci�n
         ret, otsu = cv2.threshold(gray, 90, 255, cv2.THRESH_BINARY)
         #Guardado de los resultados
-        cv2.imwrite("Imagen a Grises.jpg", gray)
-        cv2.imwrite("Imagen a Otsu.jpg", otsu)
+        cv2.imwrite("Grises.jpg", gray)
+        cv2.imwrite("Otsu.jpg", otsu)
         #Busqueda de la esquina superior izquierda de la carta
         image_height, image_width = otsu.shape
         altura_esquina = 0
