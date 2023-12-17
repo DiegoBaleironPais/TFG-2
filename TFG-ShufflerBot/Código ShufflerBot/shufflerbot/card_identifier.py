@@ -229,7 +229,7 @@ class CardIdentifier:
         #numero_escalado = cv2.resize(numero_concatenado, new_size)
         
         
-        cv2.imwrite("NumeroRecortado.jpg", numero_recortado)
+        #cv2.imwrite("NumeroRecortado.jpg", numero_recortado)
         
         #Reconocimiento de los numeros
         #number = pytesseract.image_to_string(numero_escalado, config='--dpi 200 tessedit_char_whitelist=01234567')
