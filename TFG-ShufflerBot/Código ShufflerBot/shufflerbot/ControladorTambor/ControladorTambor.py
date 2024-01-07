@@ -1,6 +1,6 @@
 import time
-import telemetrix
 
+from telemetrix import telemetrix
 from motor import Motor
 from random import randint
 from definitions import *
