@@ -40,6 +40,13 @@ def describe():
             'url': '/repartir',
             'parametros_entrada': {'carta': 'Identificador de la carta a repartir'},
             'parametros_salida': {'mensaje': 'Descripción del resultado'}
+        },
+        'informacion_tambor': {
+            'metodo': 'GET',
+            'descripcion': 'Devuelve la información actual de todas las cartas en el tambor, incluyendo las posiciones vacías.',
+            'url': '/informacion_tambor',
+            'parametros_entrada': None,
+            'parametros_salida': {'informacion': 'Listado del estado de cada posición en el tambor'}
         }
     }
     
@@ -70,6 +77,12 @@ def repartir_carta():
     carta = datos['carta']
     tambor.repartir_carta(carta)
     return jsonify({'mensaje': f'Carta {carta} repartida'})
+
+@app.route('/informacion_tambor', methods=['GET'])
+def informacion_tambor():
+    informacion = tambor.informacion_tambor()
+    return jsonify({'informacion': informacion})
+
 
 if __name__ == '__main__':
     app.run(debug=False,  host='0.0.0.0')

@@ -101,7 +101,7 @@ class ControladorTambor:
             self.motor_principal.girar(2)
             
         # Una vez en la posición correcta, establecer la posición del almacenamiento en 0
-        self.motor_principal.establecer_posicion_actual(2)
+        self.motor_principal.establecer_posicion_actual(0)
 
         # Deshabilitar el fotosensor
         self.controlador.disable_digital_reporting(self.pin_fotoBarajador)
@@ -149,9 +149,6 @@ class ControladorTambor:
         # Reiniciar el mazo actual
         self.cartas = [None] * self.num_cartas
         self.ranuras = [None] * self.num_cartas
-
-        # Reiniciar la posición del almacenamiento
-        self.resetear_posicion()
         
         # Obtener qué posición en el mazo tendrá cada carta.
         posiciones = list(range(self.num_cartas))
@@ -171,16 +168,9 @@ class ControladorTambor:
         return posiciones
 
     def repartir_carta(self, carta):
-        '''
-        Extrae la carta dada del almacenamiento.
-
-        Parámetros
-        ----------
-        carta : string
-            La carta a extraer.
-        '''
         # Determinar en qué ranura está la carta a extraer
-        ranura_carta = self.ranuras[self.cartas.index(carta)]
+        indice_carta = self.cartas.index(carta)
+        ranura_carta = self.ranuras[indice_carta]
 
         # Obtener en qué paso está esa ranura
         paso_carta = (self.motor_principal.posicion_actual - ranura_carta * self.pasos_por_ranura) % self.motor_principal.num_pasos
@@ -198,24 +188,13 @@ class ControladorTambor:
         self.motor_principal.girar(-7)
         self.motor_principal.girar(7)
 
+        # Marcar la ranura como vacía reemplazando la carta con None
+        self.cartas[indice_carta] = None
 
-if __name__ == "__main__":
-    ControladorTambor = ControladorTambor()
-    print("Reseteando la posición del tambor...")
-    ControladorTambor.resetear_posicion()
-
-    posiciones = ControladorTambor.barajar()
-    mazo = DECK
-
-    print("Insertando algunas cartas...")
-    for i in range(len(posiciones)):  # Cambia el número según cuántas cartas quieras insertar
-        carta = "12b"
-        numero_carta = mazo[i]
-        posicion_ranura = posiciones[i]
-        ControladorTambor.insertar_siguiente_carta(carta, numero_carta, posicion_ranura)
-        print(f"Carta {carta} insertada en la posición {posicion_ranura}.")
-        siguienteCarta = input("Inserta la siguiente carta porfavor:")
-
-    print("Devolviendo algunas cartas...")
-    for i in range(len(posiciones)):  # Cambia el número según cuántas cartas quieras insertar
-        ControladorTambor.repartir_carta(mazo[i]) 
+    def informacion_tambor(self):
+        print("Estado actual del tambor:")
+        for indice, carta in enumerate(self.cartas):
+            if carta is None:
+                print(f"Posición {indice}: Vacía")
+            else:
+                print(f"Posición {indice}: Carta {carta}")
