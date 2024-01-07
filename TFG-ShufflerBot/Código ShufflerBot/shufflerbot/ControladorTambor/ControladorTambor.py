@@ -61,7 +61,7 @@ class ControladorTambor:
         self.controlador.digital_write(ENABLE_PIN, 0)
         
         # Asignar el motor principal con los ajustes definidos en definitions.py
-        self.motor_principal = Motor(STORAGE_PULSE_PIN, STORAGE_DIRECTION_PIN, STORAGE_NUM_STEPS, STORAGE_MAX_SPEED, STORAGE_ACCELERATION)
+        self.motor_principal = Motor(self.controlador, STORAGE_PULSE_PIN, STORAGE_DIRECTION_PIN, STORAGE_NUM_STEPS, STORAGE_MAX_SPEED, STORAGE_ACCELERATION)
         
         # Asignar pin del fotosensor barajador usando las constantes de definitions.py
         self.pin_fotoBarajador = PHOTOSENSOR_PIN
