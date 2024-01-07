@@ -192,9 +192,10 @@ class ControladorTambor:
         self.cartas[indice_carta] = None
 
     def informacion_tambor(self):
-        print("Estado actual del tambor:")
+        info = []  # Crear una lista vacía para almacenar la información
         for indice, carta in enumerate(self.cartas):
             if carta is None:
-                print(f"Posición {indice}: Vacía")
+                info.append(f"Posición {indice}: Vacía")
             else:
-                print(f"Posición {indice}: Carta {carta}")
+                info.append(f"Posición {indice}: Carta {carta}")
+        return info  # Devolver la lista con la información
