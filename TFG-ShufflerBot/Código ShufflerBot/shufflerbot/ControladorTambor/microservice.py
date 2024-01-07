@@ -72,4 +72,4 @@ def repartir_carta():
     return jsonify({'mensaje': f'Carta {carta} repartida'})
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=False,  host='0.0.0.0')
