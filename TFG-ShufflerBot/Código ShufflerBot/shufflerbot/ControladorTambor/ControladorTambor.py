@@ -204,11 +204,18 @@ if __name__ == "__main__":
     print("Reseteando la posición del tambor...")
     ControladorTambor.resetear_posicion()
 
+    posiciones = ControladorTambor.barajar()
+    mazo = DECK
+
     print("Insertando algunas cartas...")
-    for i in range(5):  # Cambia el número según cuántas cartas quieras insertar
+    for i in range(len(posiciones)):  # Cambia el número según cuántas cartas quieras insertar
         carta = "12b"
-        numero_carta = i
-        posicion_ranura = i+1
+        numero_carta = mazo[i]
+        posicion_ranura = posiciones[i]
         ControladorTambor.insertar_siguiente_carta(carta, numero_carta, posicion_ranura)
         print(f"Carta {carta} insertada en la posición {posicion_ranura}.")
         siguienteCarta = input("Inserta la siguiente carta porfavor:")
+
+    print("Devolviendo algunas cartas...")
+    for i in range(len(posiciones)):  # Cambia el número según cuántas cartas quieras insertar
+        ControladorTambor.repartir_carta(mazo[i]) 
