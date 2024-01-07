@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from ControladorTambor import ControladorTambor  # Asume que tu clase está en controlador_tambor.py
+from ControladorTambor import ControladorTambor  
 
 app = Flask(__name__)
 
@@ -72,4 +72,4 @@ def repartir_carta():
     return jsonify({'mensaje': f'Carta {carta} repartida'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
