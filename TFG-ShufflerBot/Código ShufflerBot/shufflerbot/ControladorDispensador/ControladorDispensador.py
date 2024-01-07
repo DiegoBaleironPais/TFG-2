@@ -47,7 +47,7 @@ class ControladorDispensador:
 
         # Enviar comando por el puerto serial
         self.dispenser_serial.write(b's')
-        self.encendido = True
+        encendido = True
 
     def apagar_motor(self):
         # Similar a dispensar_carta, pero envía el comando para apagar el motor
@@ -59,7 +59,7 @@ class ControladorDispensador:
 
         # Enviar comando por el puerto serial
         self.dispenser_serial.write(b't')
-        self.encendido = False
+        encendido = False
 
 
     def motor_encendido(self):
