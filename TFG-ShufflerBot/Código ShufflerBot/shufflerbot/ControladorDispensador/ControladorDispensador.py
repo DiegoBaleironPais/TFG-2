@@ -5,16 +5,17 @@ import time
 # Variables globales
 tiempo_ultima_orden = 0
 numero_inserciones = 0
-motor_encendido = False
+encendido = True
 
 class ControladorDispensador:
     def __init__(self):
         global tiempo_ultima_orden
-        global motor_encendido
+        global encendido
         try:
             self.dispenser_serial = serial.Serial('/dev/ttyACM1', 9600)
             print("Dispensador conectado con éxito")
-            motor_encendido = True
+            self.dispenser_serial.write(b's')
+            encendido = True
         except serial.SerialException as e:
             print(f"No se pudo abrir el puerto serial: {e}")
             sys.exit(1)
@@ -46,7 +47,7 @@ class ControladorDispensador:
 
         # Enviar comando por el puerto serial
         self.dispenser_serial.write(b's')
-        self.motor_encendido = True
+        self.encendido = True
 
     def apagar_motor(self):
         # Similar a dispensar_carta, pero envía el comando para apagar el motor
@@ -58,10 +59,10 @@ class ControladorDispensador:
 
         # Enviar comando por el puerto serial
         self.dispenser_serial.write(b't')
-        self.motor_encendido = False
+        self.encendido = False
 
 
     def motor_encendido(self):
-        # Devuelve el estado actual del motor (motor_encendido o apagado)
-        return self.motor_encendido
+        # Devuelve el estado actual del motor (encendido o apagado)
+        return self.encendido
 
