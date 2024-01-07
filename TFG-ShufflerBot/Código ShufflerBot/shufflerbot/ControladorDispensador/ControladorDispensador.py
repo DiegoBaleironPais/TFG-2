@@ -61,7 +61,7 @@ class ControladorDispensador:
         self.motor_encendido = False
 
 
-    def motor_motor_encendido(self):
+    def motor_encendido(self):
         # Devuelve el estado actual del motor (motor_encendido o apagado)
         return self.motor_motor_encendido
 
