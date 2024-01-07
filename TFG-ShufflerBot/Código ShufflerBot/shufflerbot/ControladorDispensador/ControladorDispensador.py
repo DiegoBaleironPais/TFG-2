@@ -39,7 +39,7 @@ class ControladorDispensador:
 
     def encender_motor(self):
         # Similar a dispensar_carta, pero envía el comando para encender el motor
-        global tiempo_ultima_orden, numero_inserciones
+        global tiempo_ultima_orden, numero_inserciones, encendido
 
         tiempo_actual = time.time()
         if tiempo_actual - tiempo_ultima_orden < 1.8:
@@ -51,7 +51,7 @@ class ControladorDispensador:
 
     def apagar_motor(self):
         # Similar a dispensar_carta, pero envía el comando para apagar el motor
-        global tiempo_ultima_orden, numero_inserciones
+        global tiempo_ultima_orden, numero_inserciones, encendido
 
         tiempo_actual = time.time()
         if tiempo_actual - tiempo_ultima_orden < 1.8:
@@ -64,5 +64,6 @@ class ControladorDispensador:
 
     def motor_encendido(self):
         # Devuelve el estado actual del motor (encendido o apagado)
-        return self.encendido
+        global encendido
+        return encendido
 
