@@ -200,4 +200,14 @@ class ControladorTambor:
 
 
 if __name__ == "__main__":
-    print("Hola mundo")
+    ControladorTambor = ControladorTambor()
+    print("Reseteando la posición del tambor...")
+    ControladorTambor.resetear_posicion()
+
+    print("Insertando algunas cartas...")
+    for i in range(5):  # Cambia el número según cuántas cartas quieras insertar
+        carta = "12b"
+        numero_carta = i
+        posicion_ranura = i
+        ControladorTambor.insertar_siguiente_carta(carta, numero_carta, posicion_ranura)
+        print(f"Carta {carta} insertada en la posición {posicion_ranura}.")
