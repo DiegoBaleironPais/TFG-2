@@ -28,8 +28,6 @@ except serial.SerialException as e:
 
 # Create the motors
 storage_motor = Motor(controller, STORAGE_PULSE_PIN, STORAGE_DIRECTION_PIN, STORAGE_NUM_STEPS, STORAGE_MAX_SPEED, STORAGE_ACCELERATION)
-inserter_motor = Motor(controller, INSERTER_PULSE_PIN, INSERTER_DIRECTION_PIN, INSERTER_NUM_STEPS, INSERTER_MAX_SPEED, INSERTER_ACCELERATION)
-
 # Create the card identifier
 card_identifier = CardIdentifier(PI_CAM_ID, USB_CAM_ID)
 
@@ -39,7 +37,7 @@ card_identifier.start_cam(PI_CAM_ID)
 #card_identifier.start_cam(USB_CAM_ID)
 
 # Create the storiage
-storage = Storage(controller, storage_motor, inserter_motor, PHOTOSENSOR1_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP, card_identifier)
+storage = Storage(controller, storage_motor, PHOTOSENSOR_PIN, DECK, ORDERED_SHUFFLE, EXTRACTOR_STEP)
 
 # Centrado del tabor
 storage.reset_position()

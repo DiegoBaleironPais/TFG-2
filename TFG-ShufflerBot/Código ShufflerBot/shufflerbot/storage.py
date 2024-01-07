@@ -32,8 +32,6 @@ class Storage:
         Variable used to access Telemetrix's API methods.
     main_motor : motor.Motor
         Motor attached to the storage.
-    inserter_motor : motor.Motor
-        Motor attached to the inserter.
     photoShuf_pin : int
         Number of the pin that the storage photosensor is connected to.
     photoDispen_pin : int
@@ -53,8 +51,6 @@ class Storage:
         Variable used to access Telemetrix's API methods.
     main_motor : motor.Motor
         Motor attached to the storage.
-    inserter_motor : motor.Motor
-        Motor attached to the inserter.
     photoShuf_pin : int
         Number of the pin that the storage photosensor is connected to.
     photoDispen_pin : int
@@ -77,10 +73,9 @@ class Storage:
         Card identification system.
     '''
 
-    def __init__(self, controller, main_motor, inserter_motor, photoShuf_pin, deck, shuffle_type, extractor_step, card_identifier):
+    def __init__(self, controller, main_motor, photoShuf_pin, deck, shuffle_type, extractor_step, card_identifier):
         self.controller = controller
         self.main_motor = main_motor
-        self.inserter_motor = inserter_motor
         self.photoShuf_pin = photoShuf_pin
         self.deck = deck
         self.shuffle_type = shuffle_type
@@ -145,9 +140,6 @@ class Storage:
         
         # Turn the storage to the determined position
         self.main_motor.turn_to(slot_position)
-
-        # Insert the card
-        #self.inserter_motor.turn(self.inserter_motor.num_steps)
 
     def shuffle(self):
         '''
