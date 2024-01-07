@@ -197,3 +197,7 @@ class ControladorTambor:
         # Extraer la carta moviéndola de adelante hacia atrás
         self.motor_principal.girar(-7)
         self.motor_principal.girar(7)
+
+
+if __name__ == "__main__":
+    print("Hola mundo")
