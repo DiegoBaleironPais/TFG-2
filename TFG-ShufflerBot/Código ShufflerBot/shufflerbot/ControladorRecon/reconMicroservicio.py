@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from flask import Flask, jsonify, request
 from ControladorRecon import ControladorRecon 
 
