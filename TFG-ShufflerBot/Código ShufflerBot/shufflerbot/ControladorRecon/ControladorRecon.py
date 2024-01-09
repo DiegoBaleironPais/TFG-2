@@ -1,4 +1,3 @@
-# Asegúrate de importar las constantes de definitions.py
 from definitions import PI_CAM_ID, USB_CAM_ID
 import picamera
 import picamera.array
