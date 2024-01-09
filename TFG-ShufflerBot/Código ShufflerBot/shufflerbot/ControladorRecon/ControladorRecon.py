@@ -1,6 +1,4 @@
 from definitions import PI_CAM_ID, USB_CAM_ID
-import base64
-import io
 import picamera
 import picamera.array
 import cv2
@@ -42,17 +40,13 @@ class ControladorRecon:
         elif camara == 1:  # Para USBCamera
             self.cam_usb.release()
 
-    @app.route('/capturar_imagen', methods=['GET'])
-    def capturar_imagen():
-        camara = int(request.args.get('camara', type=int))
-        imagen = controlador.capturar_imagen(camara)
+    def capturar_imagen(self, camara):
+        if camara == 0:  # Para PiCamera
+            self.cam_pi.capture(self.captura_raw_pi, format="bgr")
+            imagen = self.captura_raw_pi.array
+            self.captura_raw_pi.truncate(0)
 
-        if imagen is not None:
-            # Convertir la imagen a formato JPEG (u otro formato de tu elección)
-            _, buffer = cv2.imencode('.jpg', imagen)
-            # Codificar la imagen en base64 y decodificar a cadena para JSON
-            imagen_codificada = base64.b64encode(buffer).decode()
+        elif camara == 1:  # Para USBCamera
+            _, imagen = self.cam_usb.read()
 
-            return jsonify({'mensaje': 'Imagen capturada', 'imagen': imagen_codificada}), 200
-        else:
-            return jsonify({'mensaje': 'No se pudo capturar la imagen'}), 500
+        return imagen

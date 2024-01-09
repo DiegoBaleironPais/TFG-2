@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import base64
+import io
 from flask import Flask, jsonify, request
 from ControladorRecon import ControladorRecon 
 
@@ -49,10 +51,18 @@ def detener_camara():
 
 @app.route('/capturar_imagen', methods=['GET'])
 def capturar_imagen():
-    camara = int(request.args.get('camara', type=int))  # Asegúrate de convertir a entero
+    camara = int(request.args.get('camara', type=int))
     imagen = controlador.capturar_imagen(camara)
-    # Manejo adicional si quieres devolver la imagen o guardarla
-    return jsonify({'mensaje': 'Imagen capturada'}), 200
+
+    if imagen is not None:
+        # Convertir la imagen a formato JPEG (u otro formato de tu elección)
+        _, buffer = cv2.imencode('.jpg', imagen)
+        # Codificar la imagen en base64 y decodificar a cadena para JSON
+        imagen_codificada = base64.b64encode(buffer).decode()
+
+        return jsonify({'mensaje': 'Imagen capturada', 'imagen': imagen_codificada}), 200
+    else:
+        return jsonify({'mensaje': 'No se pudo capturar la imagen'}), 500
 
 if __name__ == '__main__':
     app.run(debug=False, host='0.0.0.0', port=5002)
