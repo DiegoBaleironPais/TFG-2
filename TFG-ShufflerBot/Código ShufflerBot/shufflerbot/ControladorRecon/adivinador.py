@@ -173,7 +173,6 @@ def extraer_numero(ruta_imagen, coordenadas_esquina, margen_binarizacion=95):
     cv2.imwrite('recorteNumerico.jpg', numero_recortado)  
     gris = cv2.cvtColor(numero_recortado, cv2.COLOR_BGR2GRAY)
     # Cambiar según el número
-    print("margen = ", margen_binarizacion)
     _, umbralizado = cv2.threshold(gris, margen_binarizacion, 255, cv2.THRESH_BINARY)
     cv2.imwrite('recorteNumericoBinarizado.jpg', umbralizado)  
 
@@ -312,7 +311,6 @@ def extraer_numero(ruta_imagen, coordenadas_esquina, margen_binarizacion=95):
 carta_binarizada, carta_combinada, imagen_linea_carta, coordenadas_lineas_carta, top_y, max_y = encontrar_y_dibujar_lineas_horizontales_superiores('./Original.jpg')
 carta_combinada, numero_segmentos, porcentaje_linea, coordenadas_esquina = agregar_lineas_rojas(carta_combinada, coordenadas_lineas_carta, carta_binarizada, top_y, max_y)    
 palo = detectar_palo(numero_segmentos, porcentaje_linea)
-print("El palo es: ",palo)
 imagen_numerica, numero = extraer_numero('./Original.jpg', coordenadas_esquina)
 _, numero2 = extraer_numero('./Original.jpg', coordenadas_esquina, 75)
 _, numero3 = extraer_numero('./Original.jpg', coordenadas_esquina, 105)
@@ -336,36 +334,3 @@ def decidir_y_asignar_tres(numero, numero2, numero3, lista_prioridades):
 nuevo_numero = decidir_y_asignar_tres(numero, numero2, numero3, lista_prioridades)
 
 print("Carta detectada", nuevo_numero, "de", palo)
-
-# Títulos para las imágenes
-titulos = [
-    "Imagen Binarizada", "Imagen de Líneas Horizontales", "Imagen Combinada con Línea Roja",
-    "Imagen Numérica"
-]
-
-# Lista de imágenes para mostrar
-lista_imagenes = [
-    carta_binarizada, imagen_linea_carta, carta_combinada, imagen_numerica
-]
-
-
-# Mostrar las imágenes utilizando Matplotlib
-def mostrar_imagenes(imagenes, titulos):
-    numero_imagenes = len(imagenes)
-    numero_columnas = 4
-    numero_filas = numero_imagenes // numero_columnas + (numero_imagenes % numero_columnas > 0)
-
-    fig, ejes = plt.subplots(numero_filas, numero_columnas, figsize=(15, 5 * numero_filas))
-    for i, ax in enumerate(ejes.flatten()):
-        if i < numero_imagenes:  # Solo mostrar las imágenes que tenemos
-            if len(imagenes[i].shape) == 2:  # Si la imagen está en escala de grises
-                ax.imshow(imagenes[i], cmap='gray')
-            else:
-                ax.imshow(cv2.cvtColor(imagenes[i], cv2.COLOR_BGR2RGB))
-            ax.set_title(titulos[i])
-        ax.axis('off')
-    plt.tight_layout()
-    plt.show()
-    
-# Llamada a la función para mostrar las imágenes
-mostrar_imagenes(lista_imagenes, titulos)
