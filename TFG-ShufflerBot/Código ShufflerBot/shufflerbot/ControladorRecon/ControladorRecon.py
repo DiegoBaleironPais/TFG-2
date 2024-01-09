@@ -85,7 +85,7 @@ class ControladorRecon:
         elif camara == self.ID_CAM_USB:
             _, imagen = self.cam_usb.read()
 
-        cv2.imwrite("/Original.jpg", imagen)
+        cv2.imwrite("/tmp/Original.jpg", imagen)
         
         # Devolver la imagen capturada
         return imagen
