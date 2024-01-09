@@ -26,6 +26,41 @@ class ControladorRecon:
         self.captura_raw_pi = None
         self.cam_usb = None
 
+    def iniciar_camara(self, camara):
+        '''
+        Inicia la captura con la cámara dada.
+
+        Parámetros
+        ----------
+        camara : int
+            La cámara con la que iniciar la captura.
+        '''
+        # Si queremos iniciar la captura con la PiCamera
+        if camara == self.ID_CAM_PI:
+            self.cam_pi = picamera.PiCamera()
+            self.captura_raw_pi = picamera.array.PiRGBArray(self.cam_pi)
+
+        # Si queremos iniciar la captura con la USBCamera
+        elif camara == self.ID_CAM_USB:
+            self.cam_usb = cv2.VideoCapture(0)
+            
+    def detener_camara(self, camara):
+        '''
+        Detiene la captura con la cámara dada.
+
+        Parámetros
+        ----------
+        camara : int
+            La cámara con la que detener la captura.
+        '''
+        # Si queremos detener la captura con la PiCamera
+        if camara == self.ID_CAM_PI:
+            self.cam_pi.close()
+
+        # Si queremos detener la captura con la USBCamera
+        elif camara == self.ID_CAM_USB:
+            self.cam_usb.release()
+
     def capturar_imagen(self, camara):
         '''
         Captura una imagen con la cámara dada.
