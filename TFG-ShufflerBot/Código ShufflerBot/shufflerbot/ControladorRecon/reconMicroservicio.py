@@ -37,22 +37,22 @@ def describe():
 @app.route('/iniciar_camara', methods=['POST'])
 def iniciar_camara():
     data = request.json
-    camara = data.get('camara')
+    camara = int(data.get('camara'))  # Convertir a int
     controlador.iniciar_camara(camara)
     return jsonify({'mensaje': 'Cámara iniciada'}), 200
 
 @app.route('/detener_camara', methods=['POST'])
 def detener_camara():
     data = request.json
-    camara = data.get('camara')
+    camara = int(data.get('camara'))  # Asegúrate de convertir a entero
     controlador.detener_camara(camara)
     return jsonify({'mensaje': 'Cámara detenida'}), 200
 
 @app.route('/capturar_imagen', methods=['GET'])
 def capturar_imagen():
-    camara = request.args.get('camara', type=int)
+    camara = int(request.args.get('camara', type=int))  # Asegúrate de convertir a entero
     imagen = controlador.capturar_imagen(camara)
-    # Aquí podrías guardar la imagen en un archivo o devolverla directamente
+    # Manejo adicional si quieres devolver la imagen o guardarla
     return jsonify({'mensaje': 'Imagen capturada'}), 200
 
 if __name__ == '__main__':
