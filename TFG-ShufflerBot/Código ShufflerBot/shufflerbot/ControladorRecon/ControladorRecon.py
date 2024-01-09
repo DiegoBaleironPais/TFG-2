@@ -1,5 +1,5 @@
 # Asegúrate de importar las constantes de definitions.py
-from ControladorRecon.definitions import PI_CAM_ID, USB_CAM_ID
+from definitions import PI_CAM_ID, USB_CAM_ID
 import picamera
 import picamera.array
 import cv2
