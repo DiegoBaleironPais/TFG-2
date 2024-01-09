@@ -3,7 +3,6 @@ import time
 from telemetrix import telemetrix
 from motor import Motor
 from random import randint
-from ControladorRecon.definitions import *
 
 # Variable que contiene si el fotosensor ha detectado algo
 fotosensor_barajador = False
