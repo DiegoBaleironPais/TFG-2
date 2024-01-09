@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import io
+import cv2
 from flask import Flask, jsonify, request
 from ControladorRecon import ControladorRecon 
 
