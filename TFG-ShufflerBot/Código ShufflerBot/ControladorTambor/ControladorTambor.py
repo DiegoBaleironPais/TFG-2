@@ -97,7 +97,6 @@ class ControladorTambor:
 
         # Configurar el fotosensor de salida para entrada digital y usar la función de callback
         self.controlador.set_pin_mode_digital_input(self.pin_fotoSalida, callback_fotosensor_salida)
-        self.controlador.disable_digital_reporting(self.pin_fotoSalida)
 
 
     def resetear_posicion(self):
