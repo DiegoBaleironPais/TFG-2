@@ -1,13 +1,21 @@
 import time
 
+from definitions import *
 from telemetrix import telemetrix
 from motor import Motor
 from random import randint
 
-# Variable que contiene si el fotosensor ha detectado algo
+# Variables que manejan el estado de los fotosensores
 fotosensor_barajador = False
-fotosensor_dispensador = False
-carta_insertada = False
+fotosensor_salida = False
+
+# Función de callback para detectar cuando cambia el estado del fotosensor del cajetín
+def callback_fotosensor_salida(datos):
+    global fotosensor_salida
+    fotosensor_salida = datos[2] == 0
+    if fotosensor_salida:
+        fecha = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(datos[3]))
+        print(f"{fecha}: Fotosensor de salida ha detectado algo.")
 
 # Función de callback para recibir una notificación cuando el fotosensor detecta algo
 def callback_fotosensor_barajador(datos):
@@ -64,6 +72,9 @@ class ControladorTambor:
         
         # Asignar pin del fotosensor barajador usando las constantes de definitions.py
         self.pin_fotoBarajador = PHOTOSENSOR_PIN
+
+        # Asignar pin del fotosensor barajador usando las constantes de definitions.py
+        self.pin_fotoSalida = PHOTOSENSOR2_PIN
         
         # Asignar mazo y tipo de barajado desde definitions.py
         self.mazo = DECK
@@ -83,6 +94,11 @@ class ControladorTambor:
         # Configurar el fotosensor barajador para entrada digital y deshabilitar reportes
         self.controlador.set_pin_mode_digital_input(self.pin_fotoBarajador, callback_fotosensor_barajador)
         self.controlador.disable_digital_reporting(self.pin_fotoBarajador)
+
+        # Configurar el fotosensor de salida para entrada digital y usar la función de callback
+        self.controlador.set_pin_mode_digital_input(self.pin_fotoSalida, callback_fotosensor_salida)
+        self.controlador.disable_digital_reporting(self.pin_fotoSalida)
+
 
     def resetear_posicion(self):
         '''
@@ -198,3 +214,11 @@ class ControladorTambor:
             else:
                 info.append(f"Posición {indice}: Carta {carta}")
         return info  # Devolver la lista con la información
+    
+    def consultar_estado_fotosensor_salida(self):
+        '''
+        Consulta el estado actual del fotosensor de salida.
+        Devuelve True si ha detectado algo, False en caso contrario.
+        '''
+        global fotosensor_salida
+        return fotosensor_salida

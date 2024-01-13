@@ -47,6 +47,13 @@ def describe():
             'url': '/informacion_tambor',
             'parametros_entrada': None,
             'parametros_salida': {'informacion': 'Listado del estado de cada posición en el tambor'}
+        },
+        'estado_fotosensor_salida': {
+            'metodo': 'GET',
+            'descripcion': 'Consulta el estado actual del fotosensor de salida.',
+            'url': '/estado_fotosensor_salida',
+            'parametros_entrada': None,
+            'parametros_salida': {'estado_fotosensor_salida': 'Estado actual del fotosensor (True o False)'}
         }
     }
     
@@ -83,6 +90,10 @@ def informacion_tambor():
     informacion = tambor.informacion_tambor()
     return jsonify({'informacion': informacion})
 
+@app.route('/estado_fotosensor_salida', methods=['GET'])
+def estado_fotosensor_salida():
+    estado = tambor.consultar_estado_fotosensor_salida()
+    return jsonify({'estado_fotosensor_salida': estado})
 
 if __name__ == '__main__':
     app.run(debug=False,  host='0.0.0.0')
